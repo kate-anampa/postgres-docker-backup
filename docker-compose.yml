@@ -1,0 +1,46 @@
+version: "3.9"
+
+services:
+
+  db:
+    build: .
+    container_name: postgres_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - postgres_net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin"]
+      interval: 10s
+      retries: 5
+    restart: always
+
+  backup:
+    build: ./backup
+    container_name: backup_service
+    volumes:
+      - backups:/backups
+    networks:
+      - postgres_net
+    depends_on:
+      - db
+    restart: always
+
+  cleanup:
+    build: ./cleanup
+    container_name: cleanup_service
+    volumes:
+      - backups:/backups
+    networks:
+      - postgres_net
+    restart: always
+
+volumes:
+  pgdata:
+  backups:
+
+networks:
+  postgres_net:
+    driver: bridge
