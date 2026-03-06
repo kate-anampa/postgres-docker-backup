@@ -74,3 +74,14 @@ docker exec -it postgres_db psql -U admin -d escuela
 ```
 ![docker](img/bdesc.png)
 ![docker](img/tabla.png)
+
+## DockerHub
+
+PostgreSQL:
+https://hub.docker.com/r/kat018/postgres-db
+
+Servicio Backup:
+https://hub.docker.com/r/kat018/postgres-backup
+
+Servicio Cleanup:
+https://hub.docker.com/r/kat018/postgres-cleanup
